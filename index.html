@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <textarea name="wd" id="wd" cols="30" rows="10"></textarea>
+    <button id="submit"  onclick="getAnswer()">搜索</button>
+    <p id="answer">答案</p>
+    
+    <script>
+        function getAnswer(){
+            $.ajax({
+            type: "POST",
+            url: "http://szk.apii.xyz:3000/answer",
+            data: "text="+$("#wd").val(),
+            dataType: "json",
+                success: function (response) {
+                    var t = response.problem;
+                    var a = response.answer;
+                    var sum ="";
+                    for(var i =0 ;i<a.length;i++){
+                        sum += (i+1)+"."+a[i]+'<br>'
+                    }
+                    $("#answer").html('题目：'+t+'<br>答案：'+sum);
+                }   
+            });
+        }
+    </script>
+</body>
+</html>
